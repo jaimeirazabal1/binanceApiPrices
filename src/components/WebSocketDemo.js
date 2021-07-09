@@ -50,7 +50,7 @@ export const WebSocketDemo = () => {
                 let sustract = parseFloat(priceDoge.p) - dogeBuyPrice;
                 let percent = sustract * 100 / parseFloat(priceDoge.p);
                 setdogeBuyPricePercent(<span style={{"color":"green","fontWeight":"bold"}}>+ {percent.toFixed(2)} %</span>);
-                setdogeBuyProfit(<span style={{"color":"green","fontWeight":"bold"}}>+ {setdogeBuyPrice * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
+                setdogeBuyProfit(<span style={{"color":"green","fontWeight":"bold"}}>+ {dogeBuyPriceQuantity * parseFloat(priceDoge.p).toFixed(2)} usd</span>);
             
             }else{
 
@@ -59,7 +59,7 @@ export const WebSocketDemo = () => {
                 let percent = sustract * 100 / parseFloat(priceDoge.p);
 
                 setdogeBuyPricePercent(<span style={{"color":"red","fontWeight":"bold"}}> {percent.toFixed(2)} %</span>);
-                setdogeBuyProfit(<span style={{"color":"red","fontWeight":"bold"}}> { dogeBuyPriceQuantity * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
+                setdogeBuyProfit(<span style={{"color":"red","fontWeight":"bold"}}> { dogeBuyPriceQuantity * parseFloat(priceDoge.p).toFixed(2)} usd</span>);
 
             }
         }else{
