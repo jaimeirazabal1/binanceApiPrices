@@ -30,10 +30,10 @@ export const WebSocketDemo = () => {
     const [a_ada, setA_ada] = useState("");
 
 
-    const [dogeBuyPrice, setdogeBuyPrice] = useState(0.21491);
-    const [dogeBuyProfit, setdogeBuyProfit] = useState(null);
-    const [dogeBuyPricePercent, setdogeBuyPricePercent] = useState(null);
-    const [dogeBuyPriceUsd, setdogeBuyPriceUsd ] = useState("27826.8");
+    const [dogeBuyPrice, setdogeBuyPrice] = useState();
+    const [dogeBuyProfit, setdogeBuyProfit] = useState();
+    const [dogeBuyPricePercent, setdogeBuyPricePercent] = useState();
+    const [dogeBuyPriceQuantity, setdogeBuyPriceQuantity] = useState();
 
     useEffect(async()=>{
         if(!busco){
@@ -43,25 +43,30 @@ export const WebSocketDemo = () => {
             // setfundingsRates(fundingResponse.data);
             // setBusco(true)
         }
+        // console.log('dogeBuyPrice',dogeBuyPrice)
         if(dogeBuyPrice){
             if(dogeBuyPrice <= parseFloat(priceDoge.p)){
+                // console.log('si?')
                 let sustract = parseFloat(priceDoge.p) - dogeBuyPrice;
                 let percent = sustract * 100 / parseFloat(priceDoge.p);
                 setdogeBuyPricePercent(<span style={{"color":"green","fontWeight":"bold"}}>+ {percent.toFixed(2)} %</span>);
-                setdogeBuyProfit(<span style={{"color":"green","fontWeight":"bold"}}>+ {dogeBuyPriceUsd * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
+                setdogeBuyProfit(<span style={{"color":"green","fontWeight":"bold"}}>+ {setdogeBuyPrice * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
             
             }else{
+
+                // console.log('dogeBuyPrice',dogeBuyPrice)
                 let sustract = parseFloat(priceDoge.p) - dogeBuyPrice;
                 let percent = sustract * 100 / parseFloat(priceDoge.p);
+
                 setdogeBuyPricePercent(<span style={{"color":"red","fontWeight":"bold"}}> {percent.toFixed(2)} %</span>);
-                setdogeBuyProfit(<span style={{"color":"red","fontWeight":"bold"}}> {dogeBuyPriceUsd * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
+                setdogeBuyProfit(<span style={{"color":"red","fontWeight":"bold"}}> { dogeBuyPriceQuantity * parseFloat(priceDoge.p).toFixed(4)} usd</span>);
 
             }
         }else{
             setdogeBuyPricePercent("");
         }
         
-    },[priceDoge])
+    },[priceDoge,dogeBuyPrice])
 
     const handlePriceClick = (price,symbol) => {
         if(symbol == 'a_doge'){
@@ -250,10 +255,10 @@ export const WebSocketDemo = () => {
                         <label><input type="number" style={{"width":"100px"}} min="0" value={a_doge} step="0.001" onChange={ (e)=> setA_doge(e.target.value) } title="Precio de Alarma" placeholder="P. de Alarma" /></label>
                     </div>
                     <div className="col-md-4">
-                        <input type="text" style={{'textAlign':"center","width":"100px"}} value={dogeBuyPrice} title="Precio de Compra" onChange={ (e) => handlePrecioCompra('doge',e.target.value) } placeholder="Precio de Compra" className="mr-3"/>
+                        <input type="text" style={{'textAlign':"center","width":"100px"}} value={dogeBuyPrice} title="Precio de Compra" onChange={ (e) => setdogeBuyPrice(e.target.value) } placeholder="Precio de Compra" className="mr-3"/>
                         <span className="" title="profit/loss percent" style={{'color':'rgb(240, 185, 11)'}}>{dogeBuyPricePercent}</span> 
                         <span style={{'display':"block"}}></span>
-                        <input type="text" style={{'textAlign':"center","width":"100px"}} value={dogeBuyPriceUsd} title="Cantidad de Doge Comprado" onChange={ (e) => handlePrecioCompra('doge',e.target.value) } placeholder="Cantidad" className="mr-3"/>
+                        <input type="text" style={{'textAlign':"center","width":"100px"}} value={dogeBuyPriceQuantity} onChange={ (e) => setdogeBuyPriceQuantity(e.target.value) } title="Cantidad de Doge Comprado"  placeholder="Cantidad" className="mr-3"/>
                         <span className="" title="profit/loss" style={{'color':'rgb(240, 185, 11)'}}>{dogeBuyProfit}</span>
                     </div>
                 </div>
